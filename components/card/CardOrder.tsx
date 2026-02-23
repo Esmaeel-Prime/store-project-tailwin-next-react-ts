@@ -24,14 +24,14 @@ const CardOrder = ({ order }: { order: orderType }) => {
     rout.refresh();
     setIsEditingOrder(false);
   }
-  async function handleDeleteClick() {
-    await deleteOrder(order.userId, order.productId);
-    rout.refresh();
-  }
+
   return (
     <section className="relative bg-white/5 rounded w-80 text-nowrap p-2">
       <button
-        onClick={handleDeleteClick}
+        onClick={async () => {
+          await deleteOrder(order.userId, order.productId);
+          rout.refresh();
+        }}
         className=" absolute top-0 left-0 m-2"
       >
         <TiDelete />
