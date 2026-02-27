@@ -2,6 +2,7 @@
 import setJWT from "@/actions/setJwt";
 import signin from "@/actions/signin";
 import signup from "@/actions/signup";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaCar } from "react-icons/fa";
@@ -9,6 +10,7 @@ const Auth = ({ loginMode }: { loginMode: string }) => {
   const router = useRouter();
   const [currentError, setCurrentError] = useState<string>("");
   const [IsSendingData, setIsSendigData] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
   async function handleFormSubmit(formData: FormData) {
     setIsSendigData(true);
@@ -32,6 +34,7 @@ const Auth = ({ loginMode }: { loginMode: string }) => {
         setCurrentError(result.message);
       }
     }
+    await queryClient.invalidateQueries({ queryKey: ["user"] });
   }
   return (
     <section>
