@@ -3,29 +3,27 @@ import addOrder from "@/actions/addOrder";
 import { getUser } from "@/actions/authenicate";
 import getUserByEmail from "@/actions/getUserByEmail";
 import {
-  NotificationContext,
-  notificationContextType,
+  NotificationActionsContext,
   notificationStateEnum,
 } from "@/components/notification-context/NotificationProvider";
 import React, { useContext, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { CgShoppingCart } from "react-icons/cg";
 
 const Purchase = ({ product }: { product: productType }) => {
   const [isPurchasing, setIsPurchasing] = useState<boolean>(false);
   const purchaseButtonRef = useRef<HTMLButtonElement>(null);
-  const notifContext: notificationContextType = useContext(NotificationContext);
+  const { setNotificationState } = useContext(NotificationActionsContext);
   function handlePurchaseClick() {
     setIsPurchasing((prev) => !prev);
   }
   async function handleAddOrder() {
-    notifContext.setNotificationState({
+    setNotificationState({
       message: "در حال بررسی",
       state: notificationStateEnum.pending,
     });
     const res = await getUser();
     if (!res) {
-      notifContext.setNotificationState({
+      setNotificationState({
         message: "ابتدا وارد حساب کاربری شوید",
         state: notificationStateEnum.faild,
       });
@@ -40,14 +38,14 @@ const Purchase = ({ product }: { product: productType }) => {
       price: product.price,
     });
     if (!isAdd) {
-      notifContext.setNotificationState({
+      setNotificationState({
         message: "قبلا این کالا را انتخاب کرده‌اید به سبد سفارشات بروید",
         state: notificationStateEnum.faild,
       });
       setIsPurchasing((prev) => !prev);
       return;
     }
-    notifContext.setNotificationState({
+    setNotificationState({
       message: "به سبد افزوده شد",
       state: notificationStateEnum.success,
     });

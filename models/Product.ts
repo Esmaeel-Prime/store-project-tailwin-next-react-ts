@@ -41,8 +41,21 @@ const ProductSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Product = models?.Product || model("Product", ProductSchema);
 export default Product;
+
+export type productServerType = {
+  name: string;
+  _id: string;
+  image: string;
+  companyName: string;
+  madeDate: Date;
+  price: string;
+  description: string;
+  option: string[];
+  color: string;
+  quantity: number;
+};

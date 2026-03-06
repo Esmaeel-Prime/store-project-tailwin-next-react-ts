@@ -1,24 +1,26 @@
 "use client";
 import { FaShareNodes } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 import Bookmark from "./productCard/Bookmark";
 import Purchase from "./productCard/Purchase";
 import CardBody from "./productCard/CardBody";
-import { usePathname } from "next/navigation";
 import { useContext } from "react";
 import {
-  NotificationContext,
+  NotificationActionsContext,
   notificationStateEnum,
 } from "../notification-context/NotificationProvider";
+import { AuthUserType } from "@/actions/authenicate";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ProductCard = ({ product }: { product: productType }) => {
-  const pathName = usePathname();
-  const notifContex = useContext(NotificationContext);
+  const queryClient = useQueryClient();
+  const { setNotificationState } = useContext(NotificationActionsContext);
+  const user: AuthUserType | undefined = queryClient.getQueryData(["user"]);
+
   async function handleShareClick() {
     await navigator.clipboard
       .writeText(`${window.location.origin}/products/${product._id}`)
       .then(() => {
-        notifContex.setNotificationState({
+        setNotificationState({
           message: "آدرس در کلیپ بورد ذحیره شد",
           state: notificationStateEnum.success,
         });
@@ -40,7 +42,7 @@ const ProductCard = ({ product }: { product: productType }) => {
         <div className="mx-2 w-[1px] h-4 bg-white/30"></div>
         <Purchase product={product} />
         <div className="mx-2 w-[1px] h-4 bg-white/30"></div>
-        <Bookmark productId={product._id!} />
+        <Bookmark productId={product._id} user={user} />
       </section>
     </div>
   );
