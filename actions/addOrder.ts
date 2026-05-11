@@ -18,7 +18,7 @@ const addOrder = async (newOrder: orderType) => {
   //order should set on user model
   await User.findOneAndUpdate(
     { _id: newOrder.userId },
-    { $set: { orders: [...user!.orders!, newOrder] } }
+    { $set: { orders: [...user!.orders!, newOrder] } },
   );
 
   //orde should sit on order model
@@ -30,9 +30,7 @@ const addOrder = async (newOrder: orderType) => {
     price: newOrder.price,
     isPaid: false,
   });
-  await newOrderDb.save();
-  revalidatePath("/", "layout");
-  return true;
+  return await newOrderDb.save();
 };
 
 export default addOrder;

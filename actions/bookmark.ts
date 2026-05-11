@@ -2,26 +2,11 @@
 import connectDB from "@/database/connectDB";
 import { User } from "@/models/User";
 
-const getUserBookmarks = async (email: string): Promise<string[]> => {
-  const user = await User.findOne({ email });
-  return user?.bookmarks || [];
-};
-
-const unBookProduct = async (productId: string, email: string) => {
+const getUserBookmarks = async (email: string): Promise<string[] | null> => {
   await connectDB();
-
-  try {
-    const user = await User.findOne({ email: email });
-    const newBookmarks: string[] = user.bookmarks.filter(
-      (item: string) => item !== productId,
-    );
-    await User.findOneAndUpdate(
-      { email: email },
-      { $set: { bookmarks: newBookmarks } },
-    );
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
+  const user: UserType | null = await User.findOne({ email });
+  if (!user || !user?.bookmarks) return null;
+  return user.bookmarks;
 };
 
 type HandleBookProductResult = {

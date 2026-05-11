@@ -1,5 +1,6 @@
 type UserType = {
   _id: string;
+  isAdmin: boolean;
   email: string;
   password?: string;
   createdAt?: Date;
@@ -26,7 +27,7 @@ type orderType = {
 
 type productType = {
   name: string;
-  _id: string;
+  _id?: string;
   image: string;
   companyName: string;
   madeDate: Date | string;

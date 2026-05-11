@@ -1,9 +1,11 @@
-"use client";
 import { configureStore } from "@reduxjs/toolkit";
-import dashboardReducer from "./dashboard/dashboardSlice";
+import userReducer from "./user/userSlice"; // Import your user reducer
+import dashboardReducer from "./dashboard/dashboardSlice"; // Import your product reducer
+
 export const store = configureStore({
   reducer: {
-    dashboard: dashboardReducer,
+    user: userReducer,
+    products: dashboardReducer,
   },
 });
 

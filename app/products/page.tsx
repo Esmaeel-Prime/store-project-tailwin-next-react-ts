@@ -21,7 +21,7 @@ const page = async () => {
             product={{
               ...item,
               madeDate: new Date(item.madeDate).getFullYear().toString(),
-              _id: item._id.toString(),
+              _id: item._id!.toString(),
             }}
           />
         );

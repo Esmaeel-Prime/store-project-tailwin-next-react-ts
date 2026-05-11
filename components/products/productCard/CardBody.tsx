@@ -5,7 +5,7 @@ import React, { Fragment } from "react";
 const CardBody = ({ product }: { product: productType }) => {
   const rout = useRouter();
   return (
-    <>
+    <div className="mb-20">
       <img
         alt={product.name}
         src={product.image}
@@ -53,7 +53,7 @@ const CardBody = ({ product }: { product: productType }) => {
           );
         })}
       </section>
-    </>
+    </div>
   );
 };
 

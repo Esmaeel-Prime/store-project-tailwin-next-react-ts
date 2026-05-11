@@ -3,6 +3,7 @@
 import * as jose from "jose";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import getUserByEmail from "./getUserByEmail";
 
 const secret = new TextEncoder().encode(
   "1bb3cd940c69c8a1d5cce35b6979f944c5c75aa5819f504c5c63444211f87d80",
@@ -36,17 +37,17 @@ export type AuthUserType = {
   isAdmin: boolean;
 } | null;
 
-const getUser = async (): Promise<AuthUserType> => {
+const getUser = async (): Promise<UserType | null> => {
   const token = cookies().get("auth")?.value;
   if (!token) {
     return null;
   }
   const { payload, protectedHeader } = await jose.jwtVerify(token!, secret);
-
-  return {
-    email: payload.email as string,
-    isAdmin: payload.isAdmin as boolean,
-  };
+  const user = await getUserByEmail(payload.email as string);
+  if (user) {
+    user.password = "";
+  }
+  return user || null;
 };
 
 export { protectRout, getUser };

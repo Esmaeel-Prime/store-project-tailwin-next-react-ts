@@ -11,6 +11,7 @@ const getUserByEmail = async (email: string) => {
   }
   const newUser: UserType = {
     _id: JSON.parse(JSON.stringify(user._id)),
+    isAdmin: user.isAdmin,
     email: user.email,
     bookmarks: user.bookmarks,
     createdAt: user.createdAt,

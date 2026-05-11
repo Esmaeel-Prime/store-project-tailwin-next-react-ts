@@ -1,17 +1,16 @@
 "use client";
 import addProduct from "@/actions/addProduct";
 import {
-  NotificationContext,
+  NotificationActionsContext,
   notificationStateEnum,
 } from "@/components/notification-context/NotificationProvider";
-import Product from "@/models/Product";
 import React, { useContext, useRef, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 
 const Add = () => {
   const [options, setOptions] = useState<string[]>([]);
   const [isAddingProduct, setIsAddingProduct] = useState<boolean>();
-  const notifContext = useContext(NotificationContext);
+  const { setNotificationState } = useContext(NotificationActionsContext);
   const optionInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const compNameInput = useRef<HTMLInputElement>(null);
@@ -85,17 +84,17 @@ const Add = () => {
           const res = await addProduct(
             product,
             reader.result as string,
-            base64Image
+            base64Image,
           );
           if (!res.ok) {
-            notifContext.setNotificationState({
+            setNotificationState({
               message: res.message,
-              state: notificationStateEnum.faild,
+              state: notificationStateEnum.failed,
             });
             setIsAddingProduct(false);
             return;
           }
-          notifContext.setNotificationState({
+          setNotificationState({
             message: res.message,
             state: notificationStateEnum.success,
           });
@@ -103,9 +102,9 @@ const Add = () => {
         };
       };
     } else {
-      notifContext.setNotificationState({
+      setNotificationState({
         message: "یاید تمام گزینه ها را پر کنید",
-        state: notificationStateEnum.faild,
+        state: notificationStateEnum.failed,
       });
     }
   }
@@ -114,9 +113,9 @@ const Add = () => {
     if (isBig) {
       ImageInput.current!.files![0].slice(0, 1);
       ImageInput.current!.value = "";
-      notifContext.setNotificationState({
+      setNotificationState({
         message: "اندازه تصویر باید کوچک تر از 10mb باشد",
-        state: notificationStateEnum.faild,
+        state: notificationStateEnum.failed,
       });
     }
   }

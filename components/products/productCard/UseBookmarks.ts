@@ -1,17 +1,20 @@
-import { AuthUserType } from "@/actions/authenicate";
+import { AuthUserType, getUser } from "@/actions/authenicate";
 import { getUserBookmarks, HandleBookProduct } from "@/actions/bookmark";
 import {
   NotificationActionsContext,
   notificationStateEnum,
 } from "@/components/notification-context/NotificationProvider";
+import { RootState } from "@/store/Store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 type UseBookmarksType = {
   productId: string;
-  user: AuthUserType | undefined;
 };
 
-export const useBookmarks = ({ productId, user }: UseBookmarksType) => {
+export const useBookmarks = ({ productId }: UseBookmarksType) => {
+  const user = useSelector((state: RootState) => state.user);
+
   const { setNotificationState } = useContext(NotificationActionsContext);
   const queryClient = useQueryClient();
 
@@ -39,10 +42,6 @@ export const useBookmarks = ({ productId, user }: UseBookmarksType) => {
     mutateAsync,
   } = useMutation({
     mutationFn: async () => {
-      const user: AuthUserType | undefined = await queryClient.getQueryData([
-        "user",
-      ]);
-
       if (!user) return null;
       await HandleBookProduct(productId, user?.email);
     },
@@ -58,7 +57,7 @@ export const useBookmarks = ({ productId, user }: UseBookmarksType) => {
     if (!user) {
       setNotificationState({
         message: "ابتدا وارد حساب کاربری شوید",
-        state: notificationStateEnum.faild,
+        state: notificationStateEnum.failed,
       });
       return;
     }

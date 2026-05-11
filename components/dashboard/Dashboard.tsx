@@ -9,7 +9,7 @@ import Add from "@/components/dashboard/add/Add";
 import Link from "next/link";
 import Edit from "@/components/dashboard/edit/Edit";
 import { BiMessage } from "react-icons/bi";
-import { RootState, AppDispatch } from "@/store/dashboard/dashboardStore";
+import { RootState, AppDispatch } from "@/store/Store";
 import { setDashboardState } from "@/store/dashboard/dashboardSlice";
 import PrivateMessageChat from "./private_messages/PrivateMessageChat";
 
@@ -25,7 +25,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   privateMessage,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const dashboardState = useSelector((state: RootState) => state.dashboard);
+  const dashboardState = useSelector((state: RootState) => state.products);
 
   let pageContent = <>{order}</>;
   switch (dashboardState.dashboardState) {
@@ -68,7 +68,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                     setDashboardState({
                       state: "chart",
                       destinationId: dashboardState.destinationId,
-                    })
+                    }),
                   )
                 }
                 className={`${
@@ -87,7 +87,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                     setDashboardState({
                       state: "add",
                       destinationId: dashboardState.destinationId,
-                    })
+                    }),
                   )
                 }
                 className={`${
@@ -106,7 +106,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                     setDashboardState({
                       state: "order",
                       destinationId: dashboardState.destinationId,
-                    })
+                    }),
                   )
                 }
                 className={`${
@@ -125,7 +125,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                     setDashboardState({
                       state: "edit",
                       destinationId: dashboardState.destinationId,
-                    })
+                    }),
                   )
                 }
                 className={`${
@@ -144,7 +144,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                     setDashboardState({
                       state: "PM",
                       destinationId: dashboardState.destinationId,
-                    })
+                    }),
                   )
                 }
                 className={`${

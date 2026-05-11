@@ -15,7 +15,7 @@ export type notificationType = {
 
 export enum notificationStateEnum {
   success = 0,
-  faild = 1,
+  failed = 1,
   pending = 2,
   null = 3,
 }

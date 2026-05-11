@@ -17,12 +17,17 @@ const config = {
       },
       keyframes: {
         popUp: {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
+          "0%": { opacity: "0", transfrom: "translateY(20px)" },
+          "50%": { opacity: "0.5", transform: "translateY(-80px)" },
+          "60%": { opacity: "0.5", transform: "translateY(+40px)" },
+          "70%": { opacity: "0.5", transform: "translateY(-20px)" },
+          "80%": { opacity: "0.5", transform: "translateY(+10px)" },
+          "90%": { opacity: "0.5", transform: "translateY(-5px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        fadeOut: {
-          "0%": { opacity: " 1" },
-          "100%": { opacity: " 0" },
+        popDown: {
+          "0%": { opacity: "1", transform: "translateY(-10px)" },
+          "100%": { opacity: "0.5", transform: "translateY(100px)" },
         },
         count: {
           "0%": {
@@ -34,7 +39,7 @@ const config = {
       },
       animation: {
         popup: "popUp 0.5s ease-out",
-        fadeOut: "fadeOut 0.25s ease-in",
+        popdown: "popDown 0.3s ease-in",
         count: "count 1s ",
       },
     },
