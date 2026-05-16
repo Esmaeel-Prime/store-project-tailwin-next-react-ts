@@ -9,7 +9,7 @@ import Add from "@/components/dashboard/add/Add";
 import Link from "next/link";
 import Edit from "@/components/dashboard/edit/Edit";
 import { BiMessage } from "react-icons/bi";
-import { RootState, AppDispatch } from "@/store/Store";
+import { RootState, AppDispatch } from "@/store/store";
 import { setDashboardState } from "@/store/dashboard/dashboardSlice";
 import PrivateMessageChat from "./private_messages/PrivateMessageChat";
 

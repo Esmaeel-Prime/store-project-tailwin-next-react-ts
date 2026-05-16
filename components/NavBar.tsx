@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { ProfileOptions } from "./ProfileOptions";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/Store";
+import { AppDispatch } from "@/store/store";
 import { setUser } from "@/store/user/userSlice";
 
 const NavBar = () => {

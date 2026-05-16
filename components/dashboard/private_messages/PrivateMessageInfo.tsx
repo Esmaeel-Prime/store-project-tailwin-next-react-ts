@@ -4,7 +4,7 @@ import getUserById from "@/actions/getUserById";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import { RootState, AppDispatch } from "@/store/dashboard/dashboardStore";
+import { RootState, AppDispatch } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setDashboardState } from "@/store/dashboard/dashboardSlice";
 
@@ -20,7 +20,7 @@ const PrivateMessageInfo = ({
   useEffect(() => {
     async function getUserEmail() {
       const user: UserType | undefined = await getUserById(
-        userPrivateMessage.senderId
+        userPrivateMessage.senderId,
       );
       setUserEmail(user?.email);
     }
@@ -29,7 +29,7 @@ const PrivateMessageInfo = ({
     }
   }, []);
   const unSeenMessagesCount = userPrivateMessage.sentPrivateMessages.filter(
-    (item) => item.seen === false
+    (item) => item.seen === false,
   ).length;
   return (
     <li className="w-[90vw] h-fit rounded mx-auto bg-black/10 p-5 block sm:flex space-y-2 jusbe items-center gap-x-4 ">
@@ -40,7 +40,7 @@ const PrivateMessageInfo = ({
             setDashboardState({
               state: "chat",
               destinationId: userPrivateMessage.senderId,
-            })
+            }),
           )
         }
       >

@@ -4,7 +4,7 @@ import "./globals.css";
 import { NotificationContextProvider } from "@/components/notification-context/NotificationProvider";
 import Notification from "@/components/utils/Notification";
 import { Provider } from "react-redux";
-import { store } from "@/store/Store";
+import { store } from "@/store/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const layout = ({ children }: { children: React.ReactNode }) => {

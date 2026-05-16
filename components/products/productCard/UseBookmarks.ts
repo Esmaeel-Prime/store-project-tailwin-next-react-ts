@@ -4,7 +4,7 @@ import {
   NotificationActionsContext,
   notificationStateEnum,
 } from "@/components/notification-context/NotificationProvider";
-import { RootState } from "@/store/Store";
+import { RootState } from "@/store/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { useSelector } from "react-redux";

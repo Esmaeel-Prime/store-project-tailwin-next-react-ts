@@ -5,13 +5,20 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import getUserByEmail from "./getUserByEmail";
 
-const secret = new TextEncoder().encode(
-  "1bb3cd940c69c8a1d5cce35b6979f944c5c75aa5819f504c5c63444211f87d80",
-);
+const getEncodedSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET environment variable is not defined");
+  }
+  return new TextEncoder().encode(secret);
+};
 
 const protectRout = async (jwt: string, path: string) => {
   try {
-    const { payload, protectedHeader } = await jose.jwtVerify(jwt, secret);
+    const { payload, protectedHeader } = await jose.jwtVerify(
+      jwt,
+      getEncodedSecret(),
+    );
 
     if (path === "/login") {
       return NextResponse.redirect("http://localhost:3000");
@@ -42,7 +49,10 @@ const getUser = async (): Promise<UserType | null> => {
   if (!token) {
     return null;
   }
-  const { payload, protectedHeader } = await jose.jwtVerify(token!, secret);
+  const { payload, protectedHeader } = await jose.jwtVerify(
+    token!,
+    getEncodedSecret(),
+  );
   const user = await getUserByEmail(payload.email as string);
   if (user) {
     user.password = "";
